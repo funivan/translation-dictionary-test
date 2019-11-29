@@ -21,6 +21,7 @@ How we can solve this problem:
 In this repository you can find and compare different formats of the data. 
   
 ## How to run.
+Install dependencies with composer: `composer install` 
 ```shell script
 php -d memory_limit=512M fake-dummy.php ; php run.php
 // OR 
