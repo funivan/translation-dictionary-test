@@ -5,6 +5,7 @@ namespace Dictionary\Obj;
 
 use Dictionary\BuilderInterface;
 use Dictionary\File;
+use Dictionary\PhraseTranslations;
 use Gettext\Translations;
 
 class Obj implements BuilderInterface
@@ -16,19 +17,13 @@ class Obj implements BuilderInterface
         $file = new File(self::FILE);
         $file->write('<?php return new class {');
         $i = 0;
-        foreach ($phrases as $translation) {
+        foreach (new PhraseTranslations($phrases) as $phrase) {
             $i++;
-            $forms = $translation->getPluralTranslations();
-            if ($forms === []) {
-                $forms[0] = $translation->getTranslation();
-            }
-            foreach ($forms as $form => $phrase) {
-                $id = 'v' . crc32($translation->getOriginal() . '::form' . $form);
-                $file->write(
-                    'public $' . $id . ' = \'' . addslashes($phrase) . '\';'
-                    . ' ### ' . str_replace("\n", " ", $phrase)
-                );
-            }
+            $id = 'v' . md5($phrase->getOrigin()) . '_f' . $phrase->getForm();
+            $file->write(
+                'public $' . $id . ' = \'' . addslashes($phrase->getTranslation()) . '\';'
+                . ' ### ' . str_replace("\n", " ", $phrase->getOrigin())
+            );
         }
         $file->write('};');
     }

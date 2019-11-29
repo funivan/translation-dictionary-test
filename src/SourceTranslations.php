@@ -15,8 +15,8 @@ class SourceTranslations implements IteratorAggregate
     /**
      * @return Translation[]
      */
-    public function getIterator(): Generator
+    final public function getIterator(): Generator
     {
-        yield from Translations::fromPoFile(__DIR__ . '/../data/fake-anonymizer.po');
+        yield from Translations::fromPoFile(__DIR__ . '/../data/check.po');
     }
 }

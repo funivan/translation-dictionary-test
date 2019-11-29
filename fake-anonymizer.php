@@ -5,12 +5,11 @@ use Gettext\Translation;
 use Gettext\Translations;
 
 require_once __DIR__ . '/vendor/autoload.php';
-$file = __DIR__ . '/data/fake-anonymizer.po';
 function randomize(string $input): string
 {
     return (string)preg_replace_callback('!\p{L}!iu', function ($match) {
         $isUpperCase = $match[0] === mb_strtoupper($match[0]);
-        $result = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 1);
+        $result = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'), 0, 1);
         if ($isUpperCase) {
             $result = ucfirst($result);
         }
@@ -18,10 +17,10 @@ function randomize(string $input): string
     }, $input);
 }
 
-$translations = Translations::fromPoFile($file);
+$translations = Translations::fromPoFile(__DIR__ . '/data/fake-anonymizer.po');
 $newTranslations = new Translations();
 foreach ($translations as $translation) {
-    /** @var Translation $translation */
+    assert($translation instanceof Translation);
     if ($translation->getTranslation() !== '') {
         $new = new Translation(
             '',
@@ -33,9 +32,8 @@ foreach ($translations as $translation) {
         $newTranslations[] = $new;
     }
 }
-echo $file . "\n";
 echo 'Translated from file : ' . $translations->countTranslated() . "\n";
 echo 'Translated to file   : ' . $newTranslations->countTranslated() . "\n";
-$newTranslations->toPoFile($file);
+$newTranslations->toPoFile('data/check.po');
 echo 'saved' . "\n";
-(new Rebuild(Translations::fromPoFile($file)))->execute();
+(new Rebuild(Translations::fromPoFile('data/check.po')))->execute();

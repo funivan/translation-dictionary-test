@@ -15,12 +15,12 @@ class GeneratedTranslations
      */
     private $limit;
 
-    public function __construct($limit = 6000)
+    public function __construct(int $limit = 6000)
     {
         $this->limit = $limit;
     }
 
-    public function generate(): Translations
+    final public function generate(): Translations
     {
         $translations = new Translations();
         $source = Factory::create();
@@ -28,9 +28,10 @@ class GeneratedTranslations
         $i = 0;
         while ($i < $this->limit) {
             $i++;
-            $len = random_int(10, mt_rand(50, 300));
+            $len = random_int(10, random_int(50, 300));
             $offset = random_int(1, 5);
-            $translation = new Translation('', $source->realText($len, $offset));
+            $text = $source->realText($len, $offset);
+            $translation = new Translation(md5($text), $text);
             $translation->setTranslation($destination->realText($len, $offset));
             $translations[] = $translation;
         }

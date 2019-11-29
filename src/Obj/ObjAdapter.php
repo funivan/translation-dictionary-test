@@ -3,7 +3,6 @@
 namespace Dictionary\Obj;
 
 use Dictionary\AdapterInterface;
-use UkrainianDictionary;
 
 final class ObjAdapter implements AdapterInterface
 {
@@ -14,7 +13,7 @@ final class ObjAdapter implements AdapterInterface
 
     public function translate(string $phrase): string
     {
-        $key = 'v' . crc32($phrase . '::form' . 0);
+        $key = 'v' . md5($phrase) . '_f0';
         if (property_exists($this->dictionary, $key)) {
             return $this->dictionary->{$key};
         }

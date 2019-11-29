@@ -6,6 +6,6 @@ use Gettext\Translations;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$translations = (new GeneratedTranslations(5000))->generate();
-$translations->toPoFile('data/fake-dummy.po');
-(new Rebuild(Translations::fromPoFile('data/fake-dummy.po')))->execute();
+$translations = (new GeneratedTranslations(6500))->generate();
+$translations->toPoFile('data/check.po');
+(new Rebuild(Translations::fromPoFile('data/check.po')))->execute();

@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Dictionary;
 
 
+use RuntimeException;
+
 class Runner
 {
     /**
@@ -16,19 +18,27 @@ class Runner
         $this->dictionary = $adapter;
     }
 
-    public function execute()
+    final public function execute() : void
     {
-        $start = (memory_get_usage(true) / 1024);
+        $start = (memory_get_usage(true));
         $this->dictionary->load();
-        $load = (memory_get_usage(true) / 1024) - $start;
+        $load = (memory_get_usage(true)) - $start;
         $start = microtime(true);
         $i = 0;
+        $checked = 0;
         foreach (new SourceTranslations() as $phrase) {
-            $this->dictionary->translate($phrase->getOriginal());
+            if ($i % 40 === 0) {
+                $result = $this->dictionary->translate($phrase->getOriginal());
+                if ($result === '') {
+                    throw new RuntimeException('Can not translate phrase: ' . $phrase->getOriginal());
+                }
+                $checked++;
+            }
             $i++;
         }
-        echo 'TIME_TRANS  : ' . (microtime(true) - $start) . " kb\n";
-        echo 'MEMORY_LOAD : ' . $load . "\n";
+        echo 'TIME_TRANS  : ' . (microtime(true) - $start) . "\n";
+        echo 'MEMORY_LOAD : ' . (round($load / 1024 / 1024, 4)) . 'Mb' . ' [' . round($load / 1024) . 'Kb]' . "\n";
         echo 'PHRASES     : ' . $i . "\n";
+        echo 'CHECKED     : ' . $checked . "\n";
     }
 }

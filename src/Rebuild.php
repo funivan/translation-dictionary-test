@@ -12,6 +12,7 @@ class Rebuild
         'Mo',
         'Obj',
         'PhpArray',
+        'PlainString',
         'Po',
     ];
 
