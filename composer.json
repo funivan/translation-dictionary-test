@@ -1,0 +1,11 @@
+{
+  "require": {
+    "gettext/gettext": "^4.5",
+    "fzaninotto/faker": "^1.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dictionary\\": "src/"
+    }
+  }
+}
