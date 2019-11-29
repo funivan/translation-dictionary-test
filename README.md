@@ -1,12 +1,13 @@
 ## What?
-Using translations in the project can be tricky. 
-Translations process is pretty simple
+Translations process is pretty simple and complicated at the same time.
 ```php
 translate('Hello', 'fr'); // output Bonjour
 ```
 We can store `'Hello'=>'Bonjour'` dictionary in the memory.
-But what to do if we have about 5-10k key=>pairs. Memory begin to grow very fast.
+
+But what to do if we have about 5-10k key=>pairs? Memory begin to grow very fast.
 Storing ~600 phrases can lead up to 12MB of the memory. And this is not good.
+
 How we can solve this problem:
 - Use redis/memcache other services to retrieve data
 (*Pros:* simple to use. *Cons:* network calls, complicated infrastructure)
