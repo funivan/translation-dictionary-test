@@ -36,7 +36,7 @@ MEMORY_LOAD : Used memory to load all translations to php memory
 PHRASES     : Number of phrases stored in the dictionary
 CHECKED     : Translated phrases num
 ```
-### Random phrases
+### Random phrases (PO file size 1.9MB)
 ```
 ~~~~~~~~~~~~~~
 >> php src/Mo/test.php
@@ -69,7 +69,7 @@ MEMORY_LOAD : 12Mb [12288Kb]
 PHRASES     : 6222
 CHECKED     : 156
 ```
-### Predefined phrases
+### Predefined phrases (PO file size 618kb)
 ```
 ~~~~~~~~~~~~~~
 >> php src/Mo/test.php
